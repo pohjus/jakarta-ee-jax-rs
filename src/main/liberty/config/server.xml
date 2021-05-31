@@ -3,6 +3,7 @@
     <featureManager>
         <feature>jaxrs-2.1</feature>
         <feature>cdi-2.0</feature>
+        <feature>jpa-2.2</feature>
     </featureManager>
 
     <httpEndpoint id="defaultHttpEndpoint"
@@ -12,7 +13,7 @@
     <webApplication location="${project.artifactId}.war" contextRoot="/">
     </webApplication>
 
-   <!-- <library id="derbyJDBCLib">
+   <library id="derbyJDBCLib">
       <fileset dir="${shared.resource.dir}" includes="derby*.jar"/>
    </library>
 
@@ -21,6 +22,6 @@
       <jdbcDriver libraryRef="derbyJDBCLib" />
       <properties.derby.embedded databaseName="this-is-my-db-jta" createDatabase="create"/>
   </dataSource>
- -->
+
 
 </server>
