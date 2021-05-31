@@ -50,19 +50,20 @@ public class CustomerResource {
 
     @POST
     @Produces("application/json")
-    public String addCustomer(String customer) {
-        JsonReader reader = Json.createReader(new StringReader(customer));
-        JsonObject object = reader.readObject();
+    @Consumes("application/json")
+    public JsonObject addCustomer(JsonObject customer) {
+        // JsonReader reader = Json.createReader(new StringReader(customer));
+        // JsonObject object = reader.readObject();
 
         Customer customerObj = new Customer();
-        customerObj.setName(object.getString("name"));
+        customerObj.setName(customer.getString("name"));
 
         Customer addedCustomer = crudRepository.addCustomer(customerObj);
 
         JsonObject result = Json.createObjectBuilder()
                 .add("url", "http://localhost:8080/api/customers/" + addedCustomer.getId())
                 .build();
-        return result.toString();
+        return result;
     }
 
 
