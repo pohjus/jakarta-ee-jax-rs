@@ -1,3 +1,8 @@
 
 
+GET http://localhost:8080/myapp/api/date/text/
+
+
+###
+
 GET http://localhost:8080/myapp/api/customers
