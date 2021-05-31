@@ -9,11 +9,9 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 import java.io.StringReader;
@@ -35,7 +33,7 @@ public class CustomerResource{
 
     @DELETE
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response deleteCustomer(@PathParam("id") int id) {
         boolean result = this.crudRepository.deleteCustomerWithId(id);
         if(result) {
@@ -47,7 +45,7 @@ public class CustomerResource{
 
     @GET
     @Path("/{id}")
-    @Produces("application/json")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCustomer(@PathParam("id") int id) {
         Optional<Customer> customer = crudRepository.getCustomerWithId(id);
 
@@ -59,7 +57,7 @@ public class CustomerResource{
     }
 
     @GET
-    @Produces("application/json")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Customer> getCustomers() {
         return crudRepository.getAllCustomers();
     }
@@ -68,8 +66,8 @@ public class CustomerResource{
 
 
     @POST
-    @Produces("application/json")
-    @Consumes("application/json")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response addCustomer(Customer customer) {
         Customer addedCustomer = crudRepository.addCustomer(customer);
         return Response.created(getURI(addedCustomer.getId())).entity(addedCustomer).build();

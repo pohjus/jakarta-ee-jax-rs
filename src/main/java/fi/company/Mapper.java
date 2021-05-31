@@ -14,7 +14,6 @@ public class Mapper
     public Response toResponse(NotFoundException e) {
         return Response.status(Response.Status.NOT_FOUND)
                 .entity(new ErrorPojo(e.getMessage()))
-                .type("application/json")
                 .build();
     }
 }

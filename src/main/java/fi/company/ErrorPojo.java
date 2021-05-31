@@ -1,5 +1,8 @@
 package fi.company;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ErrorPojo {
     private String errorMsg;
 
