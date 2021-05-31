@@ -14,6 +14,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 
 @Path("/customers")
 @RequestScoped
-public class CustomerResource {
+public class CustomerResource{
 
     @Inject
     CrudRepository crudRepository;
@@ -36,7 +38,11 @@ public class CustomerResource {
     @Produces("application/json")
     public Response deleteCustomer(@PathParam("id") int id) {
         boolean result = this.crudRepository.deleteCustomerWithId(id);
-        return result ? Response.noContent().build() : Response.status(404).build();
+        if(result) {
+            return Response.noContent().build();
+        } else {
+            throw new NotFoundException("id was not found " + id);
+        }
     }
 
     @GET
@@ -44,7 +50,12 @@ public class CustomerResource {
     @Produces("application/json")
     public Response getCustomer(@PathParam("id") int id) {
         Optional<Customer> customer = crudRepository.getCustomerWithId(id);
-        return customer.isPresent() ? Response.ok(customer.get()).build() : Response.status(404).build();
+
+        if(customer.isPresent()) {
+            return Response.ok(customer.get()).build();
+        } else {
+            throw new NotFoundException("id was not found " + id);
+        }
     }
 
     @GET
@@ -72,6 +83,7 @@ public class CustomerResource {
         builder.path("" + id);
         return builder.build();
     }
+
 
 
 }
