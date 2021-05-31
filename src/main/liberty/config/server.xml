@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="${project.name}">
+    <featureManager>
+        <feature>jaxrs-2.1</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="8080"
+                  httpsPort="9043"/>
+
+    <webApplication location="${project.artifactId}.war" contextRoot="/">
+    </webApplication>
+
+   <!-- <library id="derbyJDBCLib">
+      <fileset dir="${shared.resource.dir}" includes="derby*.jar"/>
+   </library>
+
+  <dataSource id="myjndiname"
+              jndiName="jdbc/myjndiname">
+      <jdbcDriver libraryRef="derbyJDBCLib" />
+      <properties.derby.embedded databaseName="this-is-my-db-jta" createDatabase="create"/>
+  </dataSource>
+ -->
+
+</server>
