@@ -30,40 +30,30 @@ public class CustomerResource {
     @Produces("application/json")
     public String deleteCustomer(@PathParam("id") int id) {
         boolean result = this.crudRepository.deleteCustomerWithId(id);
-        return result ? "{ \"status\": \"HTTP DELETE with id = " + id + "\" }" : "{\"status\": \"not found\"}";
+        return null;
     }
 
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public String getCustomer(@PathParam("id") int id) {
+    public Customer getCustomer(@PathParam("id") int id) {
         Optional<Customer> customer = crudRepository.getCustomerWithId(id);
-        return customer.isPresent() ? customer.get().toString() : "{\"status\": \"not found\"}";
+        return customer.isPresent() ? customer.get() : null;
     }
 
     @GET
     @Produces("application/json")
-    public String getCustomers() {
-        return crudRepository.getAllCustomers().toString();
+    public List<Customer> getCustomers() {
+        return crudRepository.getAllCustomers();
     }
 
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public JsonObject addCustomer(JsonObject customer) {
-        // JsonReader reader = Json.createReader(new StringReader(customer));
-        // JsonObject object = reader.readObject();
-
-        Customer customerObj = new Customer();
-        customerObj.setName(customer.getString("name"));
-
-        Customer addedCustomer = crudRepository.addCustomer(customerObj);
-
-        JsonObject result = Json.createObjectBuilder()
-                .add("url", "http://localhost:8080/api/customers/" + addedCustomer.getId())
-                .build();
-        return result;
+    public Customer addCustomer(Customer customer) {
+        Customer addedCustomer = crudRepository.addCustomer(customer);
+        return customer;
     }
 
 
