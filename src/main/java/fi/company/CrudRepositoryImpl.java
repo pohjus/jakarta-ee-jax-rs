@@ -10,15 +10,17 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class CrudRepositoryImpl implements CrudRepository {
 
+
+    int lastId = 0;
+
     List<Customer> customers;
 
     @PostConstruct
     public void init() {
-        System.out.println("INIT!");
         customers = new ArrayList<>();
-        customers.add(new Customer(1, "Jack"));
-        customers.add(new Customer(2, "Tina"));
-        customers.add(new Customer(3, "Hannah"));
+        customers.add(new Customer(lastId++, "Jack"));
+        customers.add(new Customer(lastId++, "Tina"));
+        customers.add(new Customer(lastId++, "Hannah"));
     }
 
     @Override
@@ -45,6 +47,7 @@ public class CrudRepositoryImpl implements CrudRepository {
 
     @Override
     public Customer addCustomer(Customer customer) {
+        customer.setId(lastId++);
         this.customers.add(customer);
         return customer;
     }

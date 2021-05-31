@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @RequestScoped
 public class CustomerResource {
 
-
     @Inject
     CrudRepository crudRepository;
 
@@ -50,13 +49,18 @@ public class CustomerResource {
 
 
     @POST
+    @Produces("application/json")
     public String addCustomer(String customer) {
         JsonReader reader = Json.createReader(new StringReader(customer));
         JsonObject object = reader.readObject();
-        crudRepository.addCustomer(new Customer(object.getInt("id"), object.getString("name")));
+
+        Customer customerObj = new Customer();
+        customerObj.setName(object.getString("name"));
+
+        Customer addedCustomer = crudRepository.addCustomer(customerObj);
 
         JsonObject result = Json.createObjectBuilder()
-                .add("url", "http://localhost:8080/api/customers/" + object.getInt("id"))
+                .add("url", "http://localhost:8080/api/customers/" + addedCustomer.getId())
                 .build();
         return result.toString();
     }
