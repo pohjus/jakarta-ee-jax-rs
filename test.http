@@ -6,3 +6,18 @@ GET http://localhost:8080/myapp/api/date/text/
 ###
 
 GET http://localhost:8080/myapp/api/customers
+
+###
+
+GET http://localhost:8080/myapp/api/customers/1
+
+###
+
+DELETE http://localhost:8080/myapp/api/customers/-1
+
+###
+
+POST http://localhost:8080/myapp/api/customers/
+Content-type: application/json
+
+{ "id": 8, "name": "tiina" }

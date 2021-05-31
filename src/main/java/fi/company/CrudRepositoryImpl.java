@@ -42,4 +42,10 @@ public class CrudRepositoryImpl implements CrudRepository {
             return false;
         }
     }
+
+    @Override
+    public Customer addCustomer(Customer customer) {
+        this.customers.add(customer);
+        return customer;
+    }
 }

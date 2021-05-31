@@ -5,7 +5,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 import javax.ws.rs.*;
+import java.io.StringReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +47,19 @@ public class CustomerResource {
     public String getCustomers() {
         return crudRepository.getAllCustomers().toString();
     }
+
+
+    @POST
+    public String addCustomer(String customer) {
+        JsonReader reader = Json.createReader(new StringReader(customer));
+        JsonObject object = reader.readObject();
+        crudRepository.addCustomer(new Customer(object.getInt("id"), object.getString("name")));
+
+        JsonObject result = Json.createObjectBuilder()
+                .add("url", "http://localhost:8080/api/customers/" + object.getInt("id"))
+                .build();
+        return result.toString();
+    }
+
 
 }

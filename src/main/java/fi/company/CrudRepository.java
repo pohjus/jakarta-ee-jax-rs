@@ -8,4 +8,5 @@ public interface CrudRepository {
     public List<Customer> getAllCustomers();
     public Optional<Customer> getCustomerWithId(int id);
     public boolean deleteCustomerWithId(int id);
+    public Customer addCustomer(Customer customer);
 }
