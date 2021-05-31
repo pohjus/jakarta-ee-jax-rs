@@ -10,7 +10,13 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import java.io.StringReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +34,17 @@ public class CustomerResource {
     @DELETE
     @Path("/{id}")
     @Produces("application/json")
-    public String deleteCustomer(@PathParam("id") int id) {
+    public Response deleteCustomer(@PathParam("id") int id) {
         boolean result = this.crudRepository.deleteCustomerWithId(id);
-        return null;
+        return result ? Response.noContent().build() : Response.status(404).build();
     }
 
     @GET
     @Path("/{id}")
     @Produces("application/json")
-    public Customer getCustomer(@PathParam("id") int id) {
+    public Response getCustomer(@PathParam("id") int id) {
         Optional<Customer> customer = crudRepository.getCustomerWithId(id);
-        return customer.isPresent() ? customer.get() : null;
+        return customer.isPresent() ? Response.ok(customer.get()).build() : Response.status(404).build();
     }
 
     @GET
@@ -48,12 +54,23 @@ public class CustomerResource {
     }
 
 
+
+
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public Customer addCustomer(Customer customer) {
+    public Response addCustomer(Customer customer) {
         Customer addedCustomer = crudRepository.addCustomer(customer);
-        return customer;
+        return Response.created(getURI(addedCustomer.getId())).entity(addedCustomer).build();
+    }
+
+    @Context
+    private UriInfo info;
+
+    private URI getURI(int id) {
+        UriBuilder builder = info.getAbsolutePathBuilder();
+        builder.path("" + id);
+        return builder.build();
     }
 
 
