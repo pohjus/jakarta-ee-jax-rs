@@ -1,5 +1,7 @@
 package fi.company;
 
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +18,7 @@ public class CrudRepositoryDerby implements CrudRepository {
     @Override
     @Transactional
     public Customer addCustomer(Customer customer) {
+        System.out.println("JPA ADD");
         em.persist(customer);
         return customer;
     }
