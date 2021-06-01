@@ -8,7 +8,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class Mapper
-        implements ExceptionMapper<NotFoundException> {
+        implements ExceptionMapper<NotFoundException>  {
 
     @Override
     public Response toResponse(NotFoundException e) {

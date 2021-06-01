@@ -8,6 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
